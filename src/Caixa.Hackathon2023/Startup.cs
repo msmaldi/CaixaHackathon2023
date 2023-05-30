@@ -10,8 +10,8 @@ namespace Caixa.Hackathon2023
     {
         public static void ConfigureBuilder(WebApplicationBuilder builder)
         {
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                throw new Exception("Connection String not configured");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new Exception("Connection String not configured");
 
             builder.Services.AddSingleton<HackDb>(new HackDb(connectionString));
 

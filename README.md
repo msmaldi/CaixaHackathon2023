@@ -1,0 +1,1 @@
+SQLCONNSTR_DefaultConnection='Server=dbhackathon.database.windows.net;Initial Catalog=hack;User Id=hack;Password=Password23' dotnet run --project src/Caixa.Hackathon2023/

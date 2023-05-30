@@ -17,7 +17,7 @@ namespace Caixa.Hackathon2023.Models
         {
             Numero = numero;
             ValorAmortizacao = Math.Round(valorAmortizacao, 2);
-            ValorJuros = valorJuros;
+            ValorJuros = Math.Round(valorJuros, 2);
             ValorPrestacao = Math.Round(valorPrestacao, 2);
         }
     }
