@@ -22,11 +22,11 @@ namespace Caixa.Hackathon2023.Models
         {
             var calc = new Calculadora(valorPresente, TaxaJuros, meses);
 
-            var sac = new ResultadoSimulacaoDTO("SAC", calc.GerarSac());
-            ResultadoSimulacao.Add(sac);
-
             var price = new ResultadoSimulacaoDTO("Price", calc.GerarPrice());
             ResultadoSimulacao.Add(price);
+
+            var sac = new ResultadoSimulacaoDTO("SAC", calc.GerarSac());
+            ResultadoSimulacao.Add(sac);
         }
     }
 }

@@ -7,16 +7,35 @@ namespace Caixa.Hackathon2023.Api
     {
         public record EntradaSimulacaoDTO(double ValorDesejado, int Prazo);
 
-        public static SimulacaoDTO ObterSimulacao(EntradaSimulacaoDTO input, HackDb db)
+        public static IResult ObterSimulacao(EntradaSimulacaoDTO input, HackDb db)
         {
             var produtos = db.ObterProdutoss();
-            var p = produtos[0];
-            // TODO: validar produto valido
 
-            var simulacao = new SimulacaoDTO(p.Id, p.Nome, (double)p.TaxaJuros);
+            var produto = ObterProduto(produtos, input);
+            if (produto == null)
+            {
+                var notFound = new
+                {
+                    Codigo = 400,
+                    Mensagem = "Não há produtos disponiveis para os parâmetros informados"
+                };
+                return Results.BadRequest(notFound);
+            }
+
+            var simulacao = new SimulacaoDTO(produto.Id, produto.Nome, (double)produto.TaxaJuros);
             simulacao.CalculaResultado(input.ValorDesejado, input.Prazo);
 
-            return simulacao;
+            return Results.Ok(simulacao);
+        }
+
+        private static Produto? ObterProduto(List<Produto> produtos, EntradaSimulacaoDTO input)
+        {
+            return produtos
+                .Where(p => p.MinimoMeses <= input.Prazo)
+                .Where(p => !p.MaximoMeses.HasValue || input.Prazo <= p.MaximoMeses)
+                .Where(p => (double)p.Minimo <= input.ValorDesejado)
+                .Where(p => !p.Maximo.HasValue || input.ValorDesejado <= (double)(p.Maximo))
+                .FirstOrDefault();
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Caixa.Hackathon2023.Models
@@ -15,9 +16,9 @@ namespace Caixa.Hackathon2023.Models
         public ParcelaDTO(int numero, double valorAmortizacao, double valorJuros, double valorPrestacao)
         {
             Numero = numero;
-            ValorAmortizacao = valorAmortizacao;
+            ValorAmortizacao = Math.Round(valorAmortizacao, 2);
             ValorJuros = valorJuros;
-            ValorPrestacao = valorPrestacao;
+            ValorPrestacao = Math.Round(valorPrestacao, 2);
         }
     }
 }
