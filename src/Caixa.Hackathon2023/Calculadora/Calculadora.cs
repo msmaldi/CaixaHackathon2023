@@ -7,6 +7,7 @@ public class Calculadora
     public double ValorPresente { get; private set; }
     public double TaxaJuros { get; private set; }
     public double Meses { get; private set; }
+
     public Calculadora(double valorPresente, double taxaJuros, int meses)
     {
         ValorPresente = valorPresente;
