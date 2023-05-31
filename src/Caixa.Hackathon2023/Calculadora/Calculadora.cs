@@ -38,11 +38,11 @@ public class Calculadora
 
     public List<ParcelaDTO> GerarPrice()
     {
-        var parcelas = new List<ParcelaDTO>();
-
         int numero = 1;
         double valorPrestacao = (ValorPresente * TaxaJuros) / (1 - (1 / Math.Pow(1 + TaxaJuros, Meses)));
         double saldoDevedor = ValorPresente;
+
+        var parcelas = new List<ParcelaDTO>();
 
         for (int i = 0; i < Meses; i++, numero++)
         {
