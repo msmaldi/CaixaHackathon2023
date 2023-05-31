@@ -1,3 +1,6 @@
+using System.Text.Json;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using Caixa.Hackathon2023.Entities;
 using Caixa.Hackathon2023.Models;
 
@@ -7,7 +10,7 @@ namespace Caixa.Hackathon2023.Api
     {
         public record EntradaSimulacaoDTO(double ValorDesejado, int Prazo);
 
-        public static IResult ObterSimulacao(EntradaSimulacaoDTO input, HackDb db)
+        public static async Task<IResult> ObterSimulacao(EntradaSimulacaoDTO input, HackDb db, EventSender eventSender)
         {
             var produtos = db.ObterProdutoss();
 
@@ -24,6 +27,8 @@ namespace Caixa.Hackathon2023.Api
 
             var simulacao = new SimulacaoDTO(produto.Id, produto.Nome, (double)produto.TaxaJuros);
             simulacao.CalculaResultado(input.ValorDesejado, input.Prazo);
+
+            await eventSender.GravarSimulacaoAsync(simulacao);
 
             return Results.Ok(simulacao);
         }

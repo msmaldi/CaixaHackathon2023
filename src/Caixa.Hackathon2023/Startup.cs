@@ -14,6 +14,7 @@ namespace Caixa.Hackathon2023
                 ?? throw new Exception("Connection String not configured");
 
             builder.Services.AddSingleton<HackDb>(new HackDb(connectionString));
+            builder.Services.AddSingleton<EventSender>(new EventSender());
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
